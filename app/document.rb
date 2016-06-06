@@ -4,6 +4,10 @@ class Document < NSDocument
     true
   end
 
+  def dataOfType(typeName, error: error)
+    @window_controller.text.dataUsingEncoding(NSUTF8StringEncoding)
+  end
+
   def makeWindowControllers
     @window_controller = WindowController.alloc.init
     @window_controller.text = @contents if @contents

@@ -12,6 +12,10 @@ class WindowController < NSWindowController
 
     self.initWithWindow(@window)
   end
+
+  def text
+    @text.string
+  end
   
   def text=(str)
     @text.string = str
