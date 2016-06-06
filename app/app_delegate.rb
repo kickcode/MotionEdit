@@ -11,5 +11,12 @@ class AppDelegate
       defer: false)
     @mainWindow.title = NSBundle.mainBundle.infoDictionary['CFBundleName']
     @mainWindow.orderFrontRegardless
+
+    @text = NSTextView.alloc.initWithFrame(@mainWindow.contentView.frame)
+    @mainWindow.contentView.addSubview(@text)
+  end
+
+  def text=(str)
+    @text.string = str
   end
 end
