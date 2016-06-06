@@ -9,7 +9,7 @@ class Document < NSDocument
   end
 
   def isDocumentEdited
-    @window_controller && @window_controller.text != @contents
+    @window_controller && @window_controller.text != (@contents || "")
   end
 
   def makeWindowControllers
