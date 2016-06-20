@@ -155,7 +155,9 @@ class AppDelegate
 
   def openDocument(sender)
     open_panel = NSOpenPanel.openPanel
+    open_panel.delegate = self
     open_panel.allowsMultipleSelection = true
+    open_panel.setDirectoryURL(NSURL.URLWithString(NSHomeDirectory()))
     open_panel.beginWithCompletionHandler(Proc.new do |result|
       if result == NSFileHandlingPanelOKButton
         open_panel.URLs.each do |url|
@@ -163,5 +165,12 @@ class AppDelegate
         end
       end
     end)
+  end
+
+  def panel(sender, isValidFilename: filename)
+    *path, file = filename.split("/")
+    path = path.join("/")
+    home = NSHomeDirectory()
+    path[0...home.length] == home && file.downcase.index("motion")
   end
 end
