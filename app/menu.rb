@@ -171,6 +171,17 @@ class AppDelegate
     *path, file = filename.split("/")
     path = path.join("/")
     home = NSHomeDirectory()
-    path[0...home.length] == home && file.downcase.index("motion")
+    in_home_dir = (path[0...home.length] == home)
+    has_motion_in_name = file.downcase.index("motion")
+    if in_home_dir
+      if has_motion_in_name
+        sender.message = ""
+      else
+        sender.message = "File must have motion in name!"
+      end
+    else
+      sender.message = "File must be within the users home directory!"
+    end
+    in_home_dir && has_motion_in_name
   end
 end
