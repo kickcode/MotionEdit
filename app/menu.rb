@@ -152,4 +152,16 @@ class AppDelegate
     item.submenu = menu
     item
   end
+
+  def openDocument(sender)
+    open_panel = NSOpenPanel.openPanel
+    open_panel.allowsMultipleSelection = true
+    open_panel.beginWithCompletionHandler(Proc.new do |result|
+      if result == NSFileHandlingPanelOKButton
+        open_panel.URLs.each do |url|
+          NSDocumentController.sharedDocumentController.openDocumentWithContentsOfURL(url, display: true, completionHandler: nil)
+        end
+      end
+    end)
+  end
 end
