@@ -168,20 +168,45 @@ class AppDelegate
   end
 
   def panel(sender, isValidFilename: filename)
-    *path, file = filename.split("/")
-    path = path.join("/")
-    home = NSHomeDirectory()
-    in_home_dir = (path[0...home.length] == home)
-    has_motion_in_name = file.downcase.index("motion")
-    if in_home_dir
-      if has_motion_in_name
-        sender.message = ""
+    validate_filename(sender, filename)
+  end
+
+  def panel(sender, directoryDidChange: path)
+    if is_in_home_dir(path)
+      NSSound.soundNamed("Pop").play
+    else
+      NSSound.soundNamed("Basso").play
+    end
+  end
+
+  def panelSelectionDidChange(sender)
+    if sender.URL
+      if validate_filename(sender, sender.URL.absoluteString)
+        NSSound.soundNamed("Hero").play
       else
-        sender.message = "File must have motion in name!"
+        NSSound.soundNamed("Basso").play
+      end
+    end
+  end
+
+  def validate_filename(panel, filename)
+    *path, file = filename.gsub("file://", "").split("/")
+    path = path.join("/")
+    has_motion_in_name = file.downcase.index("motion")
+    if is_in_home_dir(path)
+      if has_motion_in_name
+        panel.message = ""
+      else
+        panel.message = "File must have motion in name!"
       end
     else
-      sender.message = "File must be within the users home directory!"
+      panel.message = "File must be within the users home directory!"
     end
-    in_home_dir && has_motion_in_name
+    is_in_home_dir(path) && has_motion_in_name
+  end
+
+  def is_in_home_dir(path)
+    home = NSHomeDirectory()
+    (path[0...home.length] == home)
   end
 end
