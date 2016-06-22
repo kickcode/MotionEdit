@@ -18,4 +18,11 @@ class Document < NSDocument
     @window_controller.text = @contents if @contents
     self.addWindowController(@window_controller)
   end
+
+  def prepareSavePanel(savePanel)
+    savePanel.delegate = self
+    savePanel.setDirectoryURL(NSURL.URLWithString(NSHomeDirectory()))
+
+    true
+  end
 end
