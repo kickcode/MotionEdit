@@ -24,6 +24,7 @@ class Document < NSDocument
   def prepareSavePanel(savePanel)
     savePanel.delegate = self
     savePanel.setDirectoryURL(NSURL.URLWithString(NSHomeDirectory()))
+    savePanel.nameFieldStringValue = "motionfile"
 
     true
   end
