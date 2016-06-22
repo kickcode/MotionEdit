@@ -1,4 +1,6 @@
 class Document < NSDocument
+  include OpenSave
+
   def readFromData(data, ofType: typeName, error: error)
     @contents = NSString.alloc.initWithData(data, encoding: NSUTF8StringEncoding)
     @window_controller.text = @contents if @window_controller
