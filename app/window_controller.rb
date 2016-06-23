@@ -8,6 +8,7 @@ class WindowController < NSWindowController
     @window.orderFrontRegardless
 
     @text = NSTextView.alloc.initWithFrame(@window.contentView.frame)
+    @text.allowsUndo = true
     @window.contentView.addSubview(@text)
 
     self.initWithWindow(@window)
