@@ -33,7 +33,7 @@ class Document < NSDocument
 
     @save_panel.accessoryView = save_panel_button
 
-    true
+    !@window_controller.text.empty?
   end
 
   def save_panel_button_click(sender)
