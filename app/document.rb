@@ -22,10 +22,26 @@ class Document < NSDocument
   end
 
   def prepareSavePanel(savePanel)
-    savePanel.delegate = self
-    savePanel.setDirectoryURL(NSURL.URLWithString(NSHomeDirectory()))
-    savePanel.nameFieldStringValue = "motionfile"
+    @save_panel = savePanel
+    @save_panel.delegate = self
+    self.reset_panel(@save_panel)
+
+    save_panel_button = NSButton.alloc.initWithFrame([[0, 0], [200, 50]])
+    save_panel_button.title = "Suggest a valid filename"
+    save_panel_button.target = self
+    save_panel_button.action = 'save_panel_button_click:'
+
+    @save_panel.accessoryView = save_panel_button
 
     true
+  end
+
+  def save_panel_button_click(sender)
+    self.reset_panel(@save_panel)
+  end
+
+  def reset_panel(panel)
+    panel.setDirectoryURL(NSURL.URLWithString(NSHomeDirectory()))
+    panel.nameFieldStringValue = "motion-edit-#{Time.now.to_i}"
   end
 end
